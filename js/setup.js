@@ -3,8 +3,6 @@
 var userDialog = document.querySelector('.setup');
 userDialog.classList.remove('hidden');
 
-document.querySelector('.setup-similar').classList.remove('hidden');
-
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
   .content
@@ -44,10 +42,12 @@ var renderWizard = function (wizard) {
 };
 
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < WIZARD_NUMBER; i++) {
+for (var i = 0; i < wizards.length; i++) {
   fragment.appendChild(renderWizard(wizards[i]));
 }
 
 similarListElement.appendChild(fragment);
+
+document.querySelector('.setup-similar').classList.remove('hidden');
 
 
