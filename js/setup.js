@@ -1,18 +1,21 @@
 'use strict';
 
-var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
+// var userDialog = document.querySelector('.setup');
+// // userDialog.classList.remove('hidden');
 
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
 
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 var WIZARD_NUMBER = 4;
 var wizardNames = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var wizardLastnames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var wizardCoat = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var wizardEyes = ['black', 'red', 'blue', 'yellow', 'green'];
+var wizardCoatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+var wizardEyesColor = ['black', 'red', 'blue', 'yellow', 'green'];
+var wizardFireballColor = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
 var randomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -23,8 +26,8 @@ var createWizards = function () {
   for (var i = 0; i < WIZARD_NUMBER; i++) {
     randonWizard.push({
       name: wizardNames[randomInt(0, wizardNames.length)] + ' ' + wizardLastnames[randomInt(0, wizardLastnames.length)],
-      coatColor: wizardCoat[randomInt(0, wizardCoat.length)],
-      eyesColor: wizardEyes[randomInt(0, wizardEyes.length)]
+      coatColor: wizardCoatColor[randomInt(0, wizardCoatColor.length)],
+      eyesColor: wizardEyesColor[randomInt(0, wizardEyesColor.length)]
     });
   }
   return randonWizard;
@@ -51,3 +54,82 @@ var init = function () {
 
   document.querySelector('.setup-similar').classList.remove('hidden');
 }; init();
+
+// 1. Открытие/закрытие окна настройки персонажа:
+
+// Нажатие на элемент .setup-open удаляет класс hidden у блока setup
+// Нажатие на элемент .setup-close, расположенный внутри блока setup возвращает ему класс hidden.
+
+// Если диалог открыт, нажатие на кнопку «Сохранить» приводит к отправке формы
+// Если диалог открыт и фокус находится на кнопке «Сохранить», нажатие на ENTER приводит к отправке формы
+
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupOpenIcon = document.querySelector('.setup-open-icon');
+var setupClose = setup.querySelector('.setup-close');
+var userName = setup.querySelector('.setup-user-name');
+var dataForm = setup.querySelector('.setup-wizard-form');
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE && userName !== document.activeElement) {
+    closePopup();
+  }
+};
+
+setupOpenIcon.tabIndex = 0;
+setupClose.tabIndex = 0;
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup();
+  }
+});
+
+var wizardCoat = document.querySelector('.wizard-coat');
+var wizardEyes = document.querySelector('.wizard-eyes');
+var wizardFireball = document.querySelector('.setup-fireball-wrap');
+
+wizardCoat.addEventListener('click', function () {
+  var randomCoatColor = randomInt(wizardCoatColor);
+  wizardCoat.style.fill = randomCoatColor;
+  document.querySelector('input[name = coat-color]').value = randomCoatColor;
+});
+
+wizardEyes.addEventListener('click', function () {
+  var randomEyesColor = randomInt(wizardEyesColor);
+  wizardEyes.style.fill = randomEyesColor;
+  document.querySelector('input[name = eyes-color]').value = randomEyesColor;
+});
+
+wizardFireball.addEventListener('click', function () {
+  var randomFireballColor = randomInt(wizardFireballColor);
+  wizardFireball.style.backgroundColor = randomFireballColor;
+  document.querySelector('input[name = fireball-color]').value = randomFireballColor;
+});
+
+dataForm.action = 'https://js.dump.academy/code-and-magick';
+
+
