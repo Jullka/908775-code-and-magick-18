@@ -5,9 +5,8 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
 
-
-var keyCode = {
-  ESC: 25,
+var КeyCode = {
+  ESC: 27,
   ENTER: 13
 };
 var WIZARD_NUMBER = 4;
@@ -69,7 +68,7 @@ var setupClose = setup.querySelector('.setup-close');
 var userName = setup.querySelector('.setup-user-name');
 
 var onPopupEscPress = function (evt) {
-  if (evt.keyCode === keyCode.ESC && userName !== document.activeElement) {
+  if (evt.KeyCode === KeyCode.ESC && userName !== document.activeElement) {
     closePopup();
   }
 };
@@ -88,7 +87,7 @@ setupOpen.addEventListener('click', function () {
 });
 
 setupOpen.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === keyCode.ENTER) {
+  if (evt.KeyCode === KeyCode.ENTER) {
     openPopup();
   }
 });
@@ -98,7 +97,7 @@ setupClose.addEventListener('click', function () {
 });
 
 setupClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === keyCode.ENTER) {
+  if (evt.KeyCode === KeyCode.ENTER) {
     closePopup();
   }
 });
@@ -114,13 +113,13 @@ wizardCoat.addEventListener('click', function () {
 });
 
 wizardEyes.addEventListener('click', function () {
-  var randomEyesColor = randomInt(wizardEyesColor);
+  var randomEyesColor = randomEyesColor[randomInt(0, wizardEyesColor).length];
   wizardEyes.style.fill = randomEyesColor;
   document.querySelector('input[name = eyes-color]').value = randomEyesColor;
 });
 
 wizardFireball.addEventListener('click', function () {
-  var randomFireballColor = randomInt(wizardFireballColor);
+  var randomFireballColor = randomFireballColor[randomInt(0, wizardFireballColor.length)];
   wizardFireball.style.backgroundColor = randomFireballColor;
   document.querySelector('input[name = fireball-color]').value = randomFireballColor;
 });
