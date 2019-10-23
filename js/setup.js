@@ -1,15 +1,15 @@
 'use strict';
 
-// var userDialog = document.querySelector('.setup');
-// // userDialog.classList.remove('hidden');
-
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
 
-var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
+
+var keyCode = {
+  ESC: 25,
+  ENTER: 13
+};
 var WIZARD_NUMBER = 4;
 var wizardNames = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var wizardLastnames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
@@ -65,19 +65,14 @@ var init = function () {
 
 var setup = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
-var setupOpenIcon = document.querySelector('.setup-open-icon');
 var setupClose = setup.querySelector('.setup-close');
 var userName = setup.querySelector('.setup-user-name');
-var dataForm = setup.querySelector('.setup-wizard-form');
 
 var onPopupEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE && userName !== document.activeElement) {
+  if (evt.keyCode === keyCode.ESC && userName !== document.activeElement) {
     closePopup();
   }
 };
-
-setupOpenIcon.tabIndex = 0;
-setupClose.tabIndex = 0;
 
 var openPopup = function () {
   setup.classList.remove('hidden');
@@ -93,7 +88,7 @@ setupOpen.addEventListener('click', function () {
 });
 
 setupOpen.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
+  if (evt.keyCode === keyCode.ENTER) {
     openPopup();
   }
 });
@@ -103,7 +98,7 @@ setupClose.addEventListener('click', function () {
 });
 
 setupClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
+  if (evt.keyCode === keyCode.ENTER) {
     closePopup();
   }
 });
@@ -113,7 +108,7 @@ var wizardEyes = document.querySelector('.wizard-eyes');
 var wizardFireball = document.querySelector('.setup-fireball-wrap');
 
 wizardCoat.addEventListener('click', function () {
-  var randomCoatColor = randomInt(wizardCoatColor);
+  var randomCoatColor = wizardCoatColor[randomInt(0, wizardCoatColor.length)];
   wizardCoat.style.fill = randomCoatColor;
   document.querySelector('input[name = coat-color]').value = randomCoatColor;
 });
@@ -129,7 +124,3 @@ wizardFireball.addEventListener('click', function () {
   wizardFireball.style.backgroundColor = randomFireballColor;
   document.querySelector('input[name = fireball-color]').value = randomFireballColor;
 });
-
-dataForm.action = 'https://js.dump.academy/code-and-magick';
-
-
