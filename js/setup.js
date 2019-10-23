@@ -5,7 +5,7 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
 
-var КeyCode = {
+var KeyCode = {
   ESC: 27,
   ENTER: 13
 };
@@ -113,13 +113,13 @@ wizardCoat.addEventListener('click', function () {
 });
 
 wizardEyes.addEventListener('click', function () {
-  var randomEyesColor = randomEyesColor[randomInt(0, wizardEyesColor).length];
+  var randomEyesColor = wizardEyesColor[randomInt(0, wizardEyesColor.length)];
   wizardEyes.style.fill = randomEyesColor;
   document.querySelector('input[name = eyes-color]').value = randomEyesColor;
 });
 
 wizardFireball.addEventListener('click', function () {
-  var randomFireballColor = randomFireballColor[randomInt(0, wizardFireballColor.length)];
+  var randomFireballColor = wizardFireballColor[randomInt(0, wizardFireballColor.length)];
   wizardFireball.style.backgroundColor = randomFireballColor;
   document.querySelector('input[name = fireball-color]').value = randomFireballColor;
 });
